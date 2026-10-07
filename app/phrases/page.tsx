@@ -1,16 +1,28 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { AppShell } from "@/components/layout/app-shell";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { DEFAULT_APP_STATE } from "@/lib/storage/defaults";
+import { useAppState } from "@/lib/storage/local-storage";
 import { BookA, Volume2, Mic, Plus, BookmarkCheck, Sparkles } from "lucide-react";
 
 export default function PhrasesPage() {
-  const { phrases } = DEFAULT_APP_STATE;
+  const { state } = useAppState();
+  const { phrases } = state;
   const [filter, setFilter] = React.useState("all");
+
+  const playPhrase = (text: string) => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.95;
+      utterance.lang = "en-US";
+      window.speechSynthesis.speak(utterance);
+    }
+  };
 
   const filtered =
     filter === "all"
@@ -90,14 +102,20 @@ export default function PhrasesPage() {
                 )}
 
                 <div className="pt-2 flex items-center justify-between border-t border-border-subtle/80">
-                  <button className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline">
+                  <button
+                    type="button"
+                    onClick={() => playPhrase(phrase.phrase)}
+                    className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline cursor-pointer"
+                  >
                     <Volume2 className="h-3.5 w-3.5" />
                     <span>Listen audio</span>
                   </button>
-                  <Button size="sm" variant="outline" className="rounded-full gap-1.5 text-xs">
-                    <Mic className="h-3 w-3 text-primary" />
-                    <span>Practice Saying It</span>
-                  </Button>
+                  <Link href="/practice">
+                    <Button size="sm" variant="outline" className="rounded-full gap-1.5 text-xs">
+                      <Mic className="h-3 w-3 text-primary" />
+                      <span>Practice Saying It</span>
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>

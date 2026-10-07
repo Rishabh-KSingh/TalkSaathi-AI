@@ -58,8 +58,8 @@ export function QuickModes() {
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-lavender-100 text-primary group-hover:scale-105 transition-transform">
                 <Camera className="h-5 w-5" />
               </div>
-              <Badge variant="secondary" className="text-[10px]">
-                OCR + Vision
+              <Badge variant="secondary" className="text-[10px] bg-amber-50 text-amber-700 border-amber-200">
+                Roadmap
               </Badge>
             </div>
 
@@ -68,7 +68,7 @@ export function QuickModes() {
                 Photo Grammar Checker
               </h4>
               <p className="text-xs text-text-muted mt-1 leading-relaxed">
-                Snap or upload handwritten English notes, assignments, or resumes. OCR extracts text, fixes mistakes, and generates spoken drills.
+                Planned feature: Snap handwritten English notes or assignments to extract text, fix mistakes, and generate spoken drills.
               </p>
             </div>
           </div>
@@ -77,7 +77,7 @@ export function QuickModes() {
             <Link href="/practice">
               <Button variant="outline" size="sm" className="w-full rounded-full gap-2 text-xs font-semibold">
                 <Camera className="h-3.5 w-3.5 text-primary" />
-                <span>Upload Photo →</span>
+                <span>Practice Voice Today →</span>
               </Button>
             </Link>
           </div>

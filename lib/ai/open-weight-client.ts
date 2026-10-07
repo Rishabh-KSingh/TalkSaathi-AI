@@ -281,7 +281,7 @@ Please evaluate and output strictly in JSON format.`;
       natural: parsed.natural || parsed.corrected || text,
       explanation: Array.isArray(parsed.explanation) && parsed.explanation.length > 0
         ? parsed.explanation
-        : ["Sentence analyzed by Qwen3 open-weight engine."],
+        : ["Sentence analyzed by Qwen2.5 open-weight engine."],
       mistakes: Array.isArray(parsed.mistakes) ? parsed.mistakes : [],
       nextPracticeSuggestion:
         parsed.nextPracticeSuggestion || "Practice saying the natural version out loud.",

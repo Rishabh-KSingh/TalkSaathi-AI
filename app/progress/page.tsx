@@ -5,7 +5,7 @@ import { AppShell } from "@/components/layout/app-shell";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { DEFAULT_APP_STATE } from "@/lib/storage/defaults";
+import { useAppState } from "@/lib/storage/local-storage";
 import {
   Flame,
   Award,
@@ -16,8 +16,13 @@ import {
 } from "lucide-react";
 
 export default function ProgressPage() {
-  const { progress, mistakes, streak, xp, confidenceScore } = DEFAULT_APP_STATE;
-  const [userConfidence, setUserConfidence] = React.useState(confidenceScore);
+  const { state, updateState } = useAppState();
+  const { progress, mistakes, streak, xp, confidenceScore } = state;
+  const userConfidence = confidenceScore || 3;
+
+  const handleSetConfidence = (lvl: number) => {
+    updateState({ confidenceScore: lvl });
+  };
 
   const confidenceLabels = [
     "Very Hesitant",
@@ -105,7 +110,7 @@ export default function ProgressPage() {
               {[1, 2, 3, 4, 5].map((lvl) => (
                 <button
                   key={lvl}
-                  onClick={() => setUserConfidence(lvl)}
+                  onClick={() => handleSetConfidence(lvl)}
                   className={`flex-1 rounded-2xl p-3 text-center border transition-all ${
                     userConfidence === lvl
                       ? "bg-primary text-white border-primary shadow-xs font-bold"
@@ -134,7 +139,7 @@ export default function ProgressPage() {
               </p>
             </div>
             <Badge variant="secondary" className="px-3 py-1 font-semibold">
-              3 Active Patterns
+              {mistakes.length} Active {mistakes.length === 1 ? "Pattern" : "Patterns"}
             </Badge>
           </div>
 
